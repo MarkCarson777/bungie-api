@@ -1,7 +1,7 @@
-import { fetchData } from "./api/destiny.jsx";
-
-import "./App.css";
+import { getBungieNetUser } from "./functions/getBungieNetUser";
 
 export function App() {
-  return <button onClick={() => fetchData()}>Get Data</button>;
+  return (
+    <button onClick={() => getBungieNetUser()}>Get Bungie.Net User</button>
+  );
 }
