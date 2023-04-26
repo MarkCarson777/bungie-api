@@ -15,7 +15,8 @@ export const getCharacterEquipment = () => {
       }
     )
     .then((response) => {
-      console.log(response.data.Response);
+      const data = response.data;
+      return data;
     })
     .catch((error) => {
       console.log(error);
