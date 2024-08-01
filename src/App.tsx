@@ -6,6 +6,8 @@ import {
   getDestinyCharacters,
 } from "./actions";
 
+import { SelectCharacter } from "./views/SelectCharacter";
+
 export function App() {
   const [data, setData] = useState();
   const apiKey = import.meta.env.VITE_BUNGIE_API_KEY;
@@ -53,6 +55,7 @@ export function App() {
         Get Character Equipment
       </button>
       <main>{JSON.stringify(data)}</main>
+      <SelectCharacter />
     </>
   );
 }
