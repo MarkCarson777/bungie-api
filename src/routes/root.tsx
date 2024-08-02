@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import { CharacterCard } from "../../components/CharacterCard";
+import { CharacterCard } from "../components/CharacterCard";
 
-import { getDestinyCharacters } from "../../actions";
+import { getDestinyCharacters } from "../actions";
 
 type Character = {
   characterId: string;
@@ -15,8 +16,9 @@ type CharactersResponse = {
   };
 };
 
-export function SelectCharacter() {
+export function Root() {
   const [characters, setCharacters] = useState<Record<string, Character>>({});
+  const [isLoading, setIsLoading] = useState(true);
   const membershipId = import.meta.env.VITE_BUNGIE_MEMBERSHIP_ID as string;
   const apiKey = import.meta.env.VITE_BUNGIE_API_KEY as string;
 
@@ -28,6 +30,7 @@ export function SelectCharacter() {
           apiKey
         );
         setCharacters(response.characters.data);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -38,9 +41,22 @@ export function SelectCharacter() {
 
   return (
     <div className="flex gap-4">
-      {Object.values(characters).map((character, index) => (
-        <CharacterCard key={index} character={character} />
-      ))}
+      {isLoading ? (
+        <div className="loading-indicator">Loading...</div>
+      ) : (
+        <>
+          {Object.values(characters).map((character, index) => (
+            <Link key={index} to={`character/${character.characterId}`}>
+              <CharacterCard classHash={character.classHash} />
+            </Link>
+          ))}
+          <Link to={`/testData`}>
+            <div className="flex justify-center items-center h-24 w-24 border-2">
+              <span>Data</span>
+            </div>
+          </Link>
+        </>
+      )}
     </div>
   );
 }

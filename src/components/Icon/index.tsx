@@ -21,13 +21,8 @@ const icons: IconComponents = {
   Warlock,
 };
 
-export const Icon = ({
-  icon,
-  color,
-  size,
-  ...rest
-}: IconProps): ReactElement => {
+export function Icon({ icon, color, size, ...rest }: IconProps): ReactElement {
   const Component = icons[icon];
 
   return <Component {...rest} fill={color} width={size} height={size} />;
-};
+}
