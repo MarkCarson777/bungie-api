@@ -28,7 +28,7 @@ export function CharacterCard(props: CharacterCardProps) {
   }, []);
 
   return (
-    <div>
+    <div className="flex justify-center items-center h-24 w-24 border-2">
       <span>{characterClass}</span>
     </div>
   );

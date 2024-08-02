@@ -37,7 +37,7 @@ export function SelectCharacter() {
   }, []);
 
   return (
-    <div>
+    <div className="flex gap-4">
       {Object.values(characters).map((character, index) => (
         <CharacterCard key={index} character={character} />
       ))}
