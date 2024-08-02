@@ -6,6 +6,7 @@ import { getDestinyCharacters } from "../../actions";
 
 type Character = {
   characterId: string;
+  classHash: number;
 };
 
 type CharactersResponse = {
@@ -36,10 +37,10 @@ export function SelectCharacter() {
   }, []);
 
   return (
-    <>
+    <div>
       {Object.values(characters).map((character, index) => (
-        <CharacterCard key={index} characterId={character.characterId} />
+        <CharacterCard key={index} character={character} />
       ))}
-    </>
+    </div>
   );
 }

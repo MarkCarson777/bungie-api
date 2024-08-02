@@ -40,6 +40,24 @@ export const getCharacterEquipment = (membershipId: string, apiKey: string) => {
     });
 };
 
+export const getClassDefinition = (classHash: number, apiKey: string) => {
+  return axios
+    .get(
+      `https://www.bungie.net/Platform/Destiny2/Manifest/DestinyClassDefinition/${classHash}/`,
+      {
+        headers: {
+          "X-API-Key": apiKey,
+        },
+      }
+    )
+    .then((response) => {
+      return response.data.Response;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 export const getDestinyCharacters = (membershipId: string, apiKey: string) => {
   return axios
     .get(
