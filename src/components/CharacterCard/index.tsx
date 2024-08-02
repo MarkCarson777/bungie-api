@@ -18,6 +18,7 @@ export function CharacterCard(props: CharacterCardProps) {
     const getCharacterClass = async () => {
       try {
         const response = await getClassDefinition(character.classHash, apiKey);
+        console.log("class", response);
         setCharacterClass(response.displayProperties.name);
       } catch (error) {
         console.error(error);
