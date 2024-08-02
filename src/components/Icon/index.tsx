@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
 
-import Hunter from "../../assets/icons/hunter.svg";
-import Titan from "../../assets/icons/titan.svg";
-import Warlock from "../../assets/icons/warlock.svg";
+import Hunter from "../../assets/icons/hunter.svg?react";
+import Titan from "../../assets/icons/titan.svg?react";
+import Warlock from "../../assets/icons/warlock.svg?react";
 
 export interface IconProps {
   icon: string;
