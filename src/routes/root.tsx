@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { CharacterCard } from "../components/CharacterCard";
+import { Icon } from "../components/Icon";
 
-import { getDestinyCharacters } from "../actions";
+import { getClassDefinition, getDestinyCharacters } from "../actions";
 
 type Character = {
   characterId: string;
-  classHash: number;
+  class: string;
 };
 
 type CharactersResponse = {
   characters: {
-    data: Record<string, Character>;
+    data: Record<string, { characterId: string; classHash: number }>;
   };
 };
 
 export function Root() {
-  const [characters, setCharacters] = useState<Record<string, Character>>({});
+  const [characters, setCharacters] = useState<Character[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const membershipId = import.meta.env.VITE_BUNGIE_MEMBERSHIP_ID as string;
   const apiKey = import.meta.env.VITE_BUNGIE_API_KEY as string;
@@ -29,7 +29,33 @@ export function Root() {
           membershipId,
           apiKey
         );
-        setCharacters(response.characters.data);
+
+        const charactersData = response.characters.data;
+
+        const characterPromises = Object.values(charactersData).map(
+          async (character) => {
+            let className = "";
+            try {
+              const response = await getClassDefinition(
+                character.classHash,
+                apiKey
+              );
+              className = response.displayProperties.name;
+            } catch (error) {
+              console.error(error);
+            }
+
+            return {
+              characterId: character.characterId,
+              class: className,
+            };
+          }
+        );
+
+        const characters = await Promise.all(characterPromises);
+
+        setCharacters(characters);
+
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -47,7 +73,9 @@ export function Root() {
         <>
           {Object.values(characters).map((character, index) => (
             <Link key={index} to={`character/${character.characterId}`}>
-              <CharacterCard classHash={character.classHash} />
+              <div className="flex justify-center items-center h-24 w-24 border-2">
+                <Icon icon={character.class} />
+              </div>
             </Link>
           ))}
           <Link to={`/testData`}>
