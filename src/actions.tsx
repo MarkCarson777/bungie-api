@@ -7,6 +7,7 @@ const getHeaders = {
   },
 };
 const membershipId = import.meta.env.VITE_BUNGIE_MEMBERSHIP_ID;
+const membershipType = import.meta.env.VITE_BUNGIE_MEMBERSHIP_TYPE;
 
 const fetchData = (url: string) => {
   return axios
@@ -19,7 +20,7 @@ const fetchData = (url: string) => {
     });
 };
 
-export const getBungieNetUser = (membershipType: number) => {
+export const getBungieNetUser = () => {
   const url = `${BASE_URL}/User/GetMembershipsById/${membershipId}/${membershipType}/`;
   return fetchData(url);
 };

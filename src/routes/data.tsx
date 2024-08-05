@@ -8,14 +8,13 @@ import {
 
 export function Data() {
   const [data, setData] = useState();
-  const membershipId = import.meta.env.VITE_BUNGIE_MEMBERSHIP_ID;
   // retrieve data from the Bungie API
   const retrieveData = async (action: string) => {
     try {
       let response;
       switch (action) {
         case "bungieNetUser":
-          response = await getBungieNetUser(membershipId);
+          response = await getBungieNetUser();
           break;
         case "characterEquipment":
           response = await getCharacterEquipment();
