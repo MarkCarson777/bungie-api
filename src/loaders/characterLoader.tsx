@@ -1,4 +1,4 @@
-import { useLoaderData, LoaderFunctionArgs } from "react-router-dom";
+import { LoaderFunctionArgs } from "react-router-dom";
 
 import { getCharacter } from "../actions";
 
@@ -16,10 +16,4 @@ export async function characterLoader({
   const character = await getCharacter(membershipId, characterId, apiKey);
 
   return character;
-}
-
-export function Character() {
-  const character = useLoaderData();
-
-  return <div>{JSON.stringify(character)}</div>;
 }
