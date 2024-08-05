@@ -11,6 +11,7 @@ export async function characterLoader({
 }: LoaderFunctionArgs): Promise<any> {
   const { characterId } = params as LoaderParams;
   const character = await getCharacter(characterId);
+  console.log("character", character);
 
   return character;
 }

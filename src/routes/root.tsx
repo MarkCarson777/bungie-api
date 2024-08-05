@@ -7,7 +7,9 @@ type Character = {
 };
 
 export function Root() {
-  const { characters } = useLoaderData() as { characters: Character[] };
+  const { characters } = useLoaderData() as {
+    characters: Character[];
+  };
 
   return (
     <div className="h-screen w-full justify-center items-center flex gap-4">
