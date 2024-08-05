@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://www.bungie.net/platform";
+const BASE_URL = "https://www.bungie.net/Platform";
 const getHeaders = (apiKey: string) => ({
   headers: {
     "X-API-Key": apiKey,
@@ -24,6 +24,18 @@ export const getBungieNetUser = (
   apiKey: string
 ) => {
   const url = `${BASE_URL}/User/GetMembershipsById/${membershipId}/${membershipType}/`;
+  return fetchData(url, apiKey);
+};
+
+// See the DestinyComponentType enum for a list of valid components
+// https://bungie-net.github.io/#/components/schemas/Destiny.DestinyComponentType
+
+export const getCharacter = (
+  membershipId: string,
+  characterId: string,
+  apiKey: string
+) => {
+  const url = `${BASE_URL}/Destiny2/2/Profile/${membershipId}/Character/${characterId}/?components=Characters`;
   return fetchData(url, apiKey);
 };
 

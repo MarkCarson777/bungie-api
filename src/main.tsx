@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { Root } from "./routes/root.tsx";
 import { Data } from "./routes/data.tsx";
-import { Character } from "./routes/character.tsx";
+import { Character, loader as characterLoader } from "./routes/character.tsx";
 
 import "./index.css";
 
@@ -20,6 +20,7 @@ const router = createBrowserRouter([
   {
     path: "/character/:characterId",
     element: <Character />,
+    loader: characterLoader,
   },
 ]);
 

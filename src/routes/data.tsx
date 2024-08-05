@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-import { getBungieNetUser, getCharacterEquipment } from "../actions";
+import {
+  getBungieNetUser,
+  getCharacterEquipment,
+  getCharacter,
+} from "../actions";
 
 export function Data() {
   const [data, setData] = useState();
@@ -22,6 +26,13 @@ export function Data() {
         case "characterEquipment":
           response = await getCharacterEquipment(membershipId, apiKey);
           break;
+        case "character":
+          response = await getCharacter(
+            membershipId,
+            "2305843009719514198",
+            apiKey
+          );
+          break;
         default:
           throw new Error("Invalid action");
       }
@@ -38,6 +49,7 @@ export function Data() {
       <button onClick={() => retrieveData("characterEquipment")}>
         Get Character Equipment
       </button>
+      <button onClick={() => retrieveData("character")}>Get Character</button>
       <main>{JSON.stringify(data)}</main>
     </>
   );
