@@ -6,7 +6,7 @@ import { Icon } from "../components/Icon";
 import { getClassDefinition, getDestinyCharacters } from "../actions";
 
 type Character = {
-  characterId: string;
+  id: string;
   class: string;
 };
 
@@ -30,35 +30,34 @@ export function Root() {
           apiKey
         );
 
-        const charactersData = response.characters.data;
+        const characterData = response.characters.data;
 
-        const characterPromises = Object.values(charactersData).map(
-          async (character) => {
-            let className = "";
+        const characters = await Promise.all(
+          Object.values(characterData).map(async (character) => {
+            let characterClass = "";
+
             try {
               const response = await getClassDefinition(
                 character.classHash,
                 apiKey
               );
-              className = response.displayProperties.name;
+              characterClass = response.displayProperties.name;
             } catch (error) {
               console.error(error);
             }
 
             return {
-              characterId: character.characterId,
-              class: className,
+              id: character.characterId,
+              class: characterClass,
             };
-          }
+          })
         );
 
-        const characters = await Promise.all(characterPromises);
-
         setCharacters(characters);
-
-        setIsLoading(false);
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -66,20 +65,20 @@ export function Root() {
   }, []);
 
   return (
-    <div className="flex gap-4">
+    <div className="h-screen w-full justify-center items-center flex gap-4">
       {isLoading ? (
-        <div className="loading-indicator">Loading...</div>
+        <div>Loading...</div>
       ) : (
         <>
           {Object.values(characters).map((character, index) => (
-            <Link key={index} to={`character/${character.characterId}`}>
-              <div className="flex justify-center items-center h-24 w-24 border-2">
+            <Link key={index} to={`character/${character.id}`}>
+              <div className="flex justify-center items-center h-48 w-48 border-2">
                 <Icon icon={character.class} />
               </div>
             </Link>
           ))}
           <Link to={`/testData`}>
-            <div className="flex justify-center items-center h-24 w-24 border-2">
+            <div className="flex justify-center items-center h-48 w-48 border-2">
               <span>Data</span>
             </div>
           </Link>
