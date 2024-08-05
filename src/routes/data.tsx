@@ -8,8 +8,6 @@ import {
 
 export function Data() {
   const [data, setData] = useState();
-  const apiKey = import.meta.env.VITE_BUNGIE_API_KEY;
-  const membershipType = import.meta.env.VITE_BUNGIE_MEMBERSHIP_TYPE;
   const membershipId = import.meta.env.VITE_BUNGIE_MEMBERSHIP_ID;
   // retrieve data from the Bungie API
   const retrieveData = async (action: string) => {
@@ -17,21 +15,13 @@ export function Data() {
       let response;
       switch (action) {
         case "bungieNetUser":
-          response = await getBungieNetUser(
-            membershipId,
-            membershipType,
-            apiKey
-          );
+          response = await getBungieNetUser(membershipId);
           break;
         case "characterEquipment":
-          response = await getCharacterEquipment(membershipId, apiKey);
+          response = await getCharacterEquipment();
           break;
         case "character":
-          response = await getCharacter(
-            membershipId,
-            "2305843009719514198",
-            apiKey
-          );
+          response = await getCharacter("2305843009719514198");
           break;
         default:
           throw new Error("Invalid action");

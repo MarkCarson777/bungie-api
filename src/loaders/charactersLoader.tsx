@@ -7,13 +7,7 @@ type CharactersResponse = {
 };
 
 export async function charactersLoader() {
-  const membershipId = import.meta.env.VITE_BUNGIE_MEMBERSHIP_ID as string;
-  const apiKey = import.meta.env.VITE_BUNGIE_API_KEY as string;
-
-  const response: CharactersResponse = await getDestinyCharacters(
-    membershipId,
-    apiKey
-  );
+  const response: CharactersResponse = await getDestinyCharacters();
 
   const characterData = response.characters.data;
 
@@ -22,7 +16,7 @@ export async function charactersLoader() {
       let characterClass = "";
 
       try {
-        const response = await getClassDefinition(character.classHash, apiKey);
+        const response = await getClassDefinition(character.classHash);
         characterClass = response.displayProperties.name;
       } catch (error) {
         console.error(error);
